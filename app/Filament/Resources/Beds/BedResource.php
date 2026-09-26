@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Filament\Resources\Beds;
+
+use App\Filament\Resources\Beds\Pages\CreateBed;
+use App\Filament\Resources\Beds\Pages\EditBed;
+use App\Filament\Resources\Beds\Pages\ListBeds;
+use App\Filament\Resources\Beds\Schemas\BedForm;
+use App\Filament\Resources\Beds\Tables\BedsTable;
+use App\Models\Bed;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+
+class BedResource extends Resource
+{
+    protected static ?string $model = Bed::class;
+
+
+    protected static ?string $recordTitleAttribute = 'Bed';
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedChevronRight;
+    protected static string|\UnitEnum|null $navigationGroup = 'Facilities';
+
+
+    public static function form(Schema $schema): Schema
+    {
+        return BedForm::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return BedsTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListBeds::route('/'),
+            'create' => CreateBed::route('/create'),
+            'edit' => EditBed::route('/{record}/edit'),
+        ];
+    }
+}
